@@ -1,0 +1,90 @@
+# .PHONY: user-home login all
+
+
+# # all:
+# # 	pytest tests/ \
+# # 	  --html=reports/full_report.html --self-contained-html \
+# # 	  --alluredir=reports/allure-results
+
+# login:
+# 	pytest tests/test_user_login.py\
+# 	  --html=reports/login_report.html --self-contained-html \
+# 	  --alluredir=reports/login_allure
+
+# user-home:
+# 	pytest tests/test_user_home.py \
+# 	  --html=reports/user_home_report.html --self-contained-html \
+# 	  --alluredir=reports/user_home_allure
+
+# test:
+# 	pytest tests/test_user_login.py
+# 	pytest tests/test_user_home.py
+
+# ============== # code 2
+.PHONY: all login user-home test
+
+RESULTS_DIR=reports
+
+define CLEAN_RESULTS
+	@echo "🧹 Cleaning old results..."
+	@python -c "import shutil; shutil.rmtree('$(RESULTS_DIR)', ignore_errors=True)"
+endef
+
+define OPEN_REPORT
+	@echo "🌐 Opening report..."
+	@if [ "$$OS" = "Windows_NT" ]; then \
+		start $(RESULTS_DIR)\report.html; \
+	elif command -v open >/dev/null 2>&1; then \
+		open $(RESULTS_DIR)/report.html; \
+	else \
+		xdg-open $(RESULTS_DIR)/report.html; \
+	fi
+endef
+
+
+# all:
+# 	$(CLEAN_RESULTS)
+# 	pytest tests/ \
+# 	  --html=$(RESULTS_DIR)/full_report.html --self-contained-html \
+# 	  --alluredir=$(RESULTS_DIR)/allure-results
+# 	$(OPEN_REPORT)
+
+login:
+	$(CLEAN_RESULTS)
+	pytest tests/test_user_login.py \
+	  --html=$(RESULTS_DIR)/login_report.html --self-contained-html \
+	  --alluredir=$(RESULTS_DIR)/login_allure
+	$(OPEN_REPORT)
+
+user_home:
+	$(CLEAN_RESULTS)
+	pytest tests/test_user_home.py \
+	  --html=$(RESULTS_DIR)/user_home_report.html --self-contained-html \
+	  --alluredir=$(RESULTS_DIR)/user_home_allure
+	$(OPEN_REPORT)
+
+home_promoted_profiles:
+	$(CLEAN_RESULTS)
+	pytest tests/test_user_home_promoted_profiles.py \
+	  --html=$(RESULTS_DIR)/view_more_promoted_profiles_report.html --self-contained-html \
+	  --alluredir=$(RESULTS_DIR)/Home_screen_promoted_profiles_allure
+	$(OPEN_REPORT)
+
+
+home_preference_profiles:
+	$(CLEAN_RESULTS)
+	pytest tests/test_user_home_preference_profiles.py \
+	  --html=$(RESULTS_DIR)/view_more_promoted_profiles_report.html --self-contained-html \
+	  --alluredir=$(RESULTS_DIR)/Home_screen_preference_profiles_allure
+	$(OPEN_REPORT)
+
+
+test:
+	pytest tests/test_user_login.py
+	pytest tests/test_user_home.py
+	pytest tests/test_user_home_promoted_profiles.py
+	pytest tests/test_user_home_preference_profiles.py
+
+
+
+================= # code 3

@@ -1,0 +1,122 @@
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from utils.locators import LOCATORS
+from appium.webdriver.common.appiumby import AppiumBy
+from selenium.webdriver.common.actions.action_builder import ActionBuilder
+from selenium.webdriver.common.actions.pointer_input import PointerInput
+from selenium.common.exceptions import TimeoutException
+
+
+class User_home_screen_promoted_profiles_page:
+    def __init__(self, driver):
+        self.driver = driver
+
+    
+
+    
+
+    
+
+    
+
+    # ================= USER INFO ==================
+    def is_user_image_displayed(self):
+        strategy, value = LOCATORS["USER_IMAGE"]
+        try:
+            el = WebDriverWait(self.driver, 5).until(
+                EC.presence_of_element_located((strategy, value))
+            )
+            return el.is_displayed()
+        except:
+            return False
+
+    def get_user_welcome_text(self):
+        strategy, value = LOCATORS["USER_WELCOME_TEXT"]
+        el = WebDriverWait(self.driver, 5).until(
+            EC.presence_of_element_located((strategy, value))
+        )
+        return el.text
+
+    def get_logged_in_username(self):
+        full_text = self.get_user_welcome_text()
+        if full_text.startswith("Welcome"):
+            return full_text.replace("Welcome", "").strip(" !")
+        return full_text
+
+    def get_user_id(self):
+        strategy, value = LOCATORS["USER_ID"]
+        el = WebDriverWait(self.driver, 5).until(
+            EC.presence_of_element_located((strategy, value))
+        )
+        return el.text
+
+    
+    # ================= PROMOTED PROFILES ==================
+    def get_promoted_profiles_title(self):
+        strategy, value = LOCATORS["PROMOTED_PROFILES_TITLE"]
+        try:
+            el = WebDriverWait(self.driver, 5).until(
+                EC.presence_of_element_located((strategy, value))
+            )
+            text = el.text.strip()
+            print(f"📌 Promoted Profiles Title Text: {text}")
+            return text
+        except:
+            print("❌ Promoted Profiles title not found")
+            return ""
+
+    # ================= HORIZONTAL SCROLL ==================
+    def scroll_profiles_to_view_more(self, max_swipes=5):
+        """Keep swiping horizontally until 'View More' is visible or max_swipes reached"""
+        strategy, value = LOCATORS["PROFILE_SCROLL_CONTAINER"]
+        container = WebDriverWait(self.driver, 5).until(
+            EC.presence_of_element_located((strategy, value))
+        )
+
+        location = container.location
+        size = container.size
+        start_x = location["x"] + size["width"] * 0.9
+        end_x = location["x"] + size["width"] * 0.1
+        y = location["y"] + size["height"] // 2
+
+        for i in range(max_swipes):
+            if self.is_view_more_card_displayed():
+                print("✅ 'View More' card is now visible")
+                return True
+            self.driver.swipe(start_x, y, end_x, y, 800)
+            print(f"👉 Swiped profiles horizontally ({i+1}/{max_swipes})")
+
+        return self.is_view_more_card_displayed()
+
+    def is_view_more_card_displayed(self):
+        """Check if 'View More' card is visible"""
+        strategy, value = LOCATORS["VIEW_MORE_CARD"]
+        try:
+            el = WebDriverWait(self.driver, 3).until(
+                EC.presence_of_element_located((strategy, value))
+            )
+            return el.is_displayed()
+        except:
+            return False
+
+    def get_view_more_text(self):
+        """Return 'View More' text if visible"""
+        strategy, value = LOCATORS["VIEW_MORE_TEXT"]
+        try:
+            el = WebDriverWait(self.driver, 3).until(
+                EC.presence_of_element_located((strategy, value))
+            )
+            return el.text.strip()
+        except:
+            return ""
+
+    
+    # ================= WRAPPER ==================
+    def user_home_screen_promoted_profiles_page(self):
+        """Complete Home flow in one call, return counts"""
+        self.is_user_image_displayed()
+        self.get_user_welcome_text()
+        self.get_logged_in_username()
+        self.get_user_id()
+        self.is_view_profile_icon_displayed()
+        self.is_view_profile_text_displayed()

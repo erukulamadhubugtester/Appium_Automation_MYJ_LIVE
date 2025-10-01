@@ -1,0 +1,86 @@
+cd ~/Mobile_Automation
+source venv/bin/activate
+
+source venv/bin/activate
+-> { del pycache ->}  
+find . -type d -name "**pycache**" -exec rm -r {} +
+find . -type d -name "**pycache**" -exec rm -rf {} +
+
+pip install python-dotenv
+
+npm install -g appium-doctor
+appium-doctor --android
+appium-doctor --ios
+
+---
+
+✅ Full Flow
+
+1.Start Android emulator:
+
+adb emu kill
+emulator -avd Medium_Phone_API_36.0
+
+or
+
+emulator -avd Medium_Phone_API_36.0
+
+2.Start Appium server:
+
+appium
+
+3.In a separate terminal, run your tests:
+
+pytest -s -v tests/test_login.py
+
+---
+
+# find packages locations
+
+adb shell pm list packages
+
+or
+adb shell pm list packages | grep chrome
+adb shell pm list packages | grep whatsapp
+adb shell pm list packages | grep instagram
+
+---
+
+✅ Steps to Open Appium Inspector on macOS
+https://github.com/appium/appium-inspector/releases
+https://chatgpt.com/share/68d28d05-398c-8009-9e8c-35bf7911df51
+
+✅ Fix
+
+In Appium Inspector → Capability Builder, add these one by one:
+
+Name Type Value
+platformName text Android
+deviceName text emulator-5554
+automationName text UiAutomator2
+appPackage text com.meriteye.makeyourjodi
+appActivity text com.meriteye.makeyourjodi.MainActivity
+
+⚠️ Do NOT add undefined values (like empty fields).
+
+✅ Then JSON should look like this:
+{
+"platformName": "Android",
+"deviceName": "emulator-5554",
+"automationName": "UiAutomator2",
+"appPackage": "com.meriteye.makeyourjodi",
+"appActivity": "com.meriteye.makeyourjodi.MainActivity"
+}
+
+{
+"platformName": "Android",
+"deviceName": "emulator-5554",
+"automationName": "UiAutomator2",
+"appPackage": "com.meriteye.makeyourjodi",
+"appActivity": ".MainActivity",
+"noReset": false,
+"autoGrantPermissions": true,
+"newCommandTimeout": 300
+}
+
+---

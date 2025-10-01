@@ -1,0 +1,22 @@
+cd ~/Mobile_Automation
+source venv/bin/activate
+
+source venv/bin/activate
+
+✅ Full Flow
+
+Start Android emulator:
+
+emulator -avd Medium_Phone_API_36.0
+
+
+(wait until device boots up)
+
+Start Appium server:
+
+appium
+
+
+In a separate terminal, run your tests:
+
+pytest -s -v tests/test_login.py

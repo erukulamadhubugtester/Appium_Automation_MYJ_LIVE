@@ -1,0 +1,35 @@
+import time
+import pytest
+from appium import webdriver
+from appium.options.android import UiAutomator2Options  # ✅ new import
+from pages.login_page import LoginPage
+
+
+@pytest.fixture
+def driver():
+    options = UiAutomator2Options()
+    options.platform_name = "Android"
+    options.device_name = "emulator-5554"
+    options.automation_name = "UiAutomator2"
+
+    options.app_package = "com.meriteye.makeyourjodi"
+    options.app_activity = ".MainActivity"  # ✅ Correct one
+    options.auto_grant_permissions = True  # ✅ auto-accept all permissions
+
+    driver = webdriver.Remote("http://localhost:4723", options=options)
+    yield driver
+    driver.quit()
+
+
+def test_login(driver):
+    login = LoginPage(driver)
+    time.sleep(5)  # Wait for app to load
+    login.enter_phone("6303481147")
+    login.enter_password("Qwerty@1")
+    login.click_login()
+    time.sleep(5)
+    # Verify login success
+    success_msg = driver.find_element(
+        by="id", value="com.example:id/successMessage"
+    ).text
+    assert "Welcome" in success_msg

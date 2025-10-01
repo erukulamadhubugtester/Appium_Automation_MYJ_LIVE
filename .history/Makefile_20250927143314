@@ -1,0 +1,13 @@
+.PHONY: user-home login all
+
+user-home:
+	pytest tests/test_user_home.py \
+	  --html=reports/user_home_report.html --self-contained-html \
+	  --alluredir=reports/user_home_allure
+
+login:
+	pytest tests/test_login.py \
+	  --html=reports/login_report.html --self-contained-html \
+	  --alluredir=reports/login_allure
+
+
