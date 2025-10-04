@@ -416,4 +416,11 @@ LOCATORS = {
         AppiumBy.XPATH,
         '//android.view.View[@content-desc="Connected"]/android.view.ViewGroup/android.view.ViewGroup',
     ),
+    # ===============. chat screen =================
+    "CHAT_MODULE_ICON": "//android.view.View[@content-desc='Chat']/android.widget.ImageView",
+    "CHAT_TITLE": "(//android.widget.TextView[@text='Chat'])[1]",
+    "CHAT_OPTIONS_THREE_DOTS": "//android.widget.TextView[@text='']",  # Updated XPath
+    "SEARCH_USERS_FIELD": "//android.widget.EditText[@text='Search Users']",
+    "PROFILE_CONTAINER": "//android.view.ViewGroup[contains(@content-desc, ',')]",
+    "PROFILE_NAME": ".//android.widget.TextView",
 }

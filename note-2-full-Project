@@ -78,6 +78,7 @@ npm install -g appium
 npm install -g appium-doctor
 pip install pytest-html
 python -m pip show pytest-html
+pip install allure-pytest
 
 
 Install Java JDK 11+ → set JAVA_HOME.

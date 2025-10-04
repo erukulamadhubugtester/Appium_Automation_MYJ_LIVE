@@ -185,6 +185,14 @@ connections:
 	  --alluredir=$(RESULTS_DIR)/connections_scroll_allure
 	$(call OPEN_REPORT,profiles_scroll_report.html)
 
+
+chat:
+	$(CLEAN_RESULTS)
+	pytest tests/test_chat.py \
+	  --html=$(RESULTS_DIR)/tests/test_chat.py_report.html --self-contained-html \
+	  --alluredir=$(RESULTS_DIR)/chat_scroll_allure
+	$(call OPEN_REPORT,profiles_scroll_report.html)
+
 # 🔹 Run all tests one by one (separate reports for each, no clean in between)
 test:
 	pytest tests/test_user_login.py \
@@ -199,13 +207,16 @@ test:
 	  --html=$(RESULTS_DIR)/R_R_report.html --self-contained-html
 
 	pytest tests/test_profiles.py \
-	  --html=$(RESULTS_DIR)/R_R_report.html --self-contained-html
+	  --html=$(RESULTS_DIR)/profiles_report.html --self-contained-html
 
 	pytest tests/test_profiles_data_scroll_page.py \
-	  --html=$(RESULTS_DIR)/R_scroll_report.html --self-contained-html
+	  --html=$(RESULTS_DIR)/profiles_data_scroll_page_scroll_report.html --self-contained-html
 
 	pytest tests/test_connections.py \
-	  --html=$(RESULTS_DIR)/R_scroll_report.html --self-contained-html
+	  --html=$(RESULTS_DIR)/connections_scroll_report.html --self-contained-html
+
+	pytest tests/test_chat.py \
+	  --html=$(RESULTS_DIR)/chat_scroll_report.html --self-contained-html
 
 
 # 🔹 Just clean reports
