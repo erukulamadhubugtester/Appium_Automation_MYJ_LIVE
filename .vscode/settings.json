@@ -1,3 +1,4 @@
 {
-  "python.analysis.extraPaths": ["./utils"]
+  "python.analysis.extraPaths": ["./utils"],
+  "makefile.configureOnOpen": false
 }

@@ -81,12 +81,63 @@
 # ======================================================== 1 code  ========================================================
 
 
+# from appium import webdriver
+# from appium.options.android import UiAutomator2Options
+# import subprocess
+
+
+# def get_emulator_udid():
+#     result = subprocess.run(["adb", "devices"], capture_output=True, text=True)
+#     for line in result.stdout.splitlines():
+#         if "emulator" in line and "device" in line:
+#             return line.split()[0]
+#     return None
+
+
+# def create_driver(use_emulator=True):
+#     if use_emulator:
+#         udid = get_emulator_udid()
+#         if not udid:
+#             raise Exception("❌ No emulator found! Start an emulator first.")
+#         device_name = udid
+#         print(f"✅ Using emulator: {device_name}")
+#     else:
+#         device_name = "RZ8R905MK6H"
+#         print(f"✅ Using real device: {device_name}")
+
+#     options = UiAutomator2Options()
+#     options.platform_name = "Android"  # Changed from platformName
+#     options.device_name = device_name
+#     options.udid = device_name
+#     options.automation_name = "UiAutomator2"
+#     options.app_package = "com.meriteye.makeyourjodi"
+#     options.app_activity = ".MainActivity"
+#     options.no_reset = False
+#     options.full_reset = False
+#     options.auto_grant_permissions = True
+#     options.app_wait_activity = "*"
+
+#     print("🔧 Creating driver with options")
+
+#     # ⚠️ KEY CHANGE: Remove /wd/hub for Appium 2.x
+#     driver = webdriver.Remote(
+#         command_executor="http://127.0.0.1:4723", options=options  # No /wd/hub!
+#     )
+
+#     driver.implicitly_wait(10)
+#     return driver
+
+
+# ============ code 2
+
+# utils / driver_factory.py
 from appium import webdriver
 from appium.options.android import UiAutomator2Options
 import subprocess
 
 
 def get_emulator_udid():
+    """Return running emulator UDID if available"""
     result = subprocess.run(["adb", "devices"], capture_output=True, text=True)
     for line in result.stdout.splitlines():
         if "emulator" in line and "device" in line:
@@ -102,11 +153,11 @@ def create_driver(use_emulator=True):
         device_name = udid
         print(f"✅ Using emulator: {device_name}")
     else:
-        device_name = "RZ8R905MK6H"
+        device_name = "RZ8R905MK6H"  # your real device
         print(f"✅ Using real device: {device_name}")
 
     options = UiAutomator2Options()
-    options.platform_name = "Android"  # Changed from platformName
+    options.platform_name = "Android"
     options.device_name = device_name
     options.udid = device_name
     options.automation_name = "UiAutomator2"
@@ -117,12 +168,11 @@ def create_driver(use_emulator=True):
     options.auto_grant_permissions = True
     options.app_wait_activity = "*"
 
-    print("🔧 Creating driver with options")
+    # Optional: Unicode keyboard support
+    options.set_capability("unicodeKeyboard", True)
+    options.set_capability("resetKeyboard", True)
 
-    # ⚠️ KEY CHANGE: Remove /wd/hub for Appium 2.x
-    driver = webdriver.Remote(
-        command_executor="http://127.0.0.1:4723", options=options  # No /wd/hub!
-    )
-
+    print("🔧 Creating driver with options...")
+    driver = webdriver.Remote(command_executor="http://127.0.0.1:4723", options=options)
     driver.implicitly_wait(10)
     return driver

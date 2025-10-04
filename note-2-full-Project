@@ -76,6 +76,8 @@ Install Appium & Doctor
 
 npm install -g appium
 npm install -g appium-doctor
+pip install pytest-html
+python -m pip show pytest-html
 
 
 Install Java JDK 11+ → set JAVA_HOME.

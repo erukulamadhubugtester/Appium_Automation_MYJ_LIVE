@@ -364,4 +364,56 @@ LOCATORS = {
         AppiumBy.XPATH,
         '//android.widget.TextView[contains(@text,"Upgrade Your Plan")]',
     ),
+    # ===================== # Connections Locators ==================================#
+    # "CONNECTIONS_ICON": (
+    #     AppiumBy.XPATH,
+    #     '//android.view.View[@content-desc="Connections"]/android.widget.ImageView',
+    # ),
+    # "CONNECTIONS_TITLE": (
+    #     AppiumBy.XPATH,
+    #     '(//android.widget.TextView[@text="Connections"])[1]',
+    # ),
+    # "SENT_TAB": (
+    #     AppiumBy.XPATH,
+    #     '//android.view.View[@content-desc="Sent"]/android.view.ViewGroup/android.view.ViewGroup',
+    # ),
+    # "PROFILE_CONTAINER": (
+    #     AppiumBy.XPATH,
+    #     "//android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup",
+    # ),
+    # "PROFILE_NAME_AGE": (
+    #     AppiumBy.XPATH,
+    #     '//android.widget.TextView[contains(@text,"yrs")]',
+    # ),
+    # "RECEIVED_TAB": (AppiumBy.XPATH, "//android.widget.TextView[@text='Received']"),
+    "CONNECTIONS_ICON": (
+        AppiumBy.XPATH,
+        '//android.view.View[@content-desc="Connections"]/android.widget.ImageView',
+    ),
+    "CONNECTIONS_TITLE": (
+        AppiumBy.XPATH,
+        '(//android.widget.TextView[@text="Connections"])[1]',
+    ),
+    "SENT_TAB": (
+        AppiumBy.XPATH,
+        '//android.view.View[@content-desc="Sent"]/android.view.ViewGroup/android.view.ViewGroup',
+    ),
+    "RECEIVED_TAB": (AppiumBy.XPATH, '//android.widget.TextView[@text="Received"]'),
+    "CONNECTED_TAB": (
+        AppiumBy.XPATH,
+        '//android.view.View[@content-desc="Connected"]/android.view.ViewGroup/android.view.ViewGroup',
+    ),
+    "PROFILE_CONTAINER": (
+        AppiumBy.XPATH,
+        "//android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup",
+    ),
+    "PROFILE_NAME_AGE": (
+        AppiumBy.XPATH,
+        '//android.widget.TextView[contains(@text,"yrs")]',
+    ),
+    # connections_locators.json / LOCATORS
+    "CONNECTED_TAB": (
+        AppiumBy.XPATH,
+        '//android.view.View[@content-desc="Connected"]/android.view.ViewGroup/android.view.ViewGroup',
+    ),
 }

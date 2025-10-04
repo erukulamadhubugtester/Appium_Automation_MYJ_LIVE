@@ -177,6 +177,14 @@ profiles_scroll:
 	$(call OPEN_REPORT,profiles_scroll_report.html)
 
 
+
+connections:
+	$(CLEAN_RESULTS)
+	pytest tests/test_connections.py \
+	  --html=$(RESULTS_DIR)/tests/test_connections.py_report.html --self-contained-html \
+	  --alluredir=$(RESULTS_DIR)/connections_scroll_allure
+	$(call OPEN_REPORT,profiles_scroll_report.html)
+
 # 🔹 Run all tests one by one (separate reports for each, no clean in between)
 test:
 	pytest tests/test_user_login.py \
@@ -194,6 +202,9 @@ test:
 	  --html=$(RESULTS_DIR)/R_R_report.html --self-contained-html
 
 	pytest tests/test_profiles_data_scroll_page.py \
+	  --html=$(RESULTS_DIR)/R_scroll_report.html --self-contained-html
+
+	pytest tests/test_connections.py \
 	  --html=$(RESULTS_DIR)/R_scroll_report.html --self-contained-html
 
 
