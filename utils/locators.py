@@ -423,4 +423,47 @@ LOCATORS = {
     "SEARCH_USERS_FIELD": "//android.widget.EditText[@text='Search Users']",
     "PROFILE_CONTAINER": "//android.view.ViewGroup[contains(@content-desc, ',')]",
     "PROFILE_NAME": ".//android.widget.TextView",
+    # # ================= search locators ==========
+    # "SEARCH_ICON": (AppiumBy.XPATH, '//android.widget.TextView[@text=""]'),
+    # "SEARCH_INPUT": (
+    #     AppiumBy.XPATH,
+    #     "//android.widget.EditText",
+    # ),  # adjust if you know exact field
+    # "PROMOTED_PROFILES_TITLE": (
+    #     AppiumBy.XPATH,
+    #     '//android.widget.TextView[@text="Promoted Profiles"]',
+    # ),
+    # "VIP_PROFILES_TITLE": (
+    #     AppiumBy.XPATH,
+    #     '//android.widget.TextView[@text="VIP Profiles"]',
+    # ),
+    # "SEARCH_ICON": (
+    #     AppiumBy.XPATH,
+    #     '//android.widget.FrameLayout[@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[4]/android.widget.ImageView',
+    # ),
+    # "PROFILE_CONTAINER": (
+    #     AppiumBy.XPATH,
+    #     '//android.view.ViewGroup[contains(@content-desc, ",")]',
+    # ),
+    # "PROFILE_NAME": (AppiumBy.XPATH, ".//android.widget.TextView"),
+    # ---- Search ----
+    "SEARCH_ICON": (AppiumBy.ACCESSIBILITY_ID, ""),  # Use content-desc if available
+    "SEARCH_INPUT": (AppiumBy.CLASS_NAME, "android.widget.EditText"),
+    "SEARCH_ICON2": (
+        AppiumBy.XPATH,
+        '//android.widget.FrameLayout[@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[4]/android.widget.ImageView',
+    ),
+    "PROMOTED_PROFILES_TITLE": (
+        AppiumBy.XPATH,
+        '//android.widget.TextView[@text="Promoted Profiles"]',
+    ),
+    "VIP_PROFILES_TITLE": (
+        AppiumBy.XPATH,
+        '//android.widget.TextView[@text="VIP Profiles"]',
+    ),
+    "PROFILE_CONTAINER": (
+        AppiumBy.XPATH,
+        '//android.view.ViewGroup[contains(@content-desc, ",")]',
+    ),
+    "PROFILE_NAME": (AppiumBy.XPATH, ".//android.widget.TextView"),
 }
