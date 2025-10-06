@@ -191,7 +191,27 @@ chat:
 	pytest tests/test_chat.py \
 	  --html=$(RESULTS_DIR)/tests/test_chat.py_report.html --self-contained-html \
 	  --alluredir=$(RESULTS_DIR)/chat_scroll_allure
-	$(call OPEN_REPORT,profiles_scroll_report.html)
+	$(call OPEN_REPORT,chat_report.html)
+
+
+
+
+search:
+	$(CLEAN_RESULTS)
+	pytest tests/test_search.py \
+	  --html=$(RESULTS_DIR)/tests/test_search.py_report.html --self-contained-html \
+	  --alluredir=$(RESULTS_DIR)/search_allure
+	$(call OPEN_REPORT,search_report.html)
+
+
+
+
+
+
+
+
+
+
 
 # 🔹 Run all tests one by one (separate reports for each, no clean in between)
 test:
@@ -217,6 +237,9 @@ test:
 
 	pytest tests/test_chat.py \
 	  --html=$(RESULTS_DIR)/chat_scroll_report.html --self-contained-html
+
+	pytest tests/test_chat.py \
+	  --html=$(RESULTS_DIR)/search_report.html --self-contained-html
 
 
 # 🔹 Just clean reports
