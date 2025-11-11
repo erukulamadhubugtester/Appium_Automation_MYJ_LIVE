@@ -26,6 +26,7 @@ appium-doctor --android
 appium-doctor --ios
 
 ---
+source venv/bin/activate
 
 ✅ Full Flow
 

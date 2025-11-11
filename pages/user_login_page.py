@@ -1,3 +1,5 @@
+import os
+from datetime import datetime
 from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -40,7 +42,7 @@ class User_login_Page:
             )
             popup_button.click()
             print("📌 Dismissed Google Password Manager popup [Not now]")
-        except:
+        except TimeoutException:
             try:
                 popup_button = WebDriverWait(self.driver, 3).until(
                     EC.presence_of_element_located(
@@ -49,7 +51,7 @@ class User_login_Page:
                 )
                 popup_button.click()
                 print("📌 Dismissed Google Password Manager popup [Never]")
-            except:
+            except TimeoutException:
                 print("✅ No password popup appeared")
 
     def is_home_screen_displayed(self):
@@ -63,7 +65,6 @@ class User_login_Page:
             return False
 
     def handle_profile_completion_popup(self):
-        """Check and handle profile completion popup after login"""
         try:
             strategy, value = LOCATORS["PROFILE_POPUP_TITLE"]
             popup = WebDriverWait(self.driver, 5).until(
@@ -99,16 +100,51 @@ class User_login_Page:
                 print("✅ Clicked 'Skip for Now'")
                 return False
 
-        except:
+        except TimeoutException:
             print("✅ No profile completion popup → Profile is 100% completed")
             return True
 
-    # ✅ NEW wrapper method
+    # ✅ NEW: Detect login error messages
+    def is_login_error_displayed(self):
+        try:
+            error_element = WebDriverWait(self.driver, 3).until(
+                EC.presence_of_element_located(
+                    (
+                        AppiumBy.ANDROID_UIAUTOMATOR,
+                        'new UiSelector().textContains("Unexpected error")',
+                    )
+                )
+            )
+            if error_element.is_displayed():
+                print(f"❌ Login error detected: {error_element.text}")
+                return True
+        except TimeoutException:
+            pass
+        return False
+
+    # ✅ NEW: Capture screenshot for debugging
+    def take_screenshot(self, name="login_error"):
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        os.makedirs("screenshots", exist_ok=True)
+        path = f"screenshots/{name}_{timestamp}.png"
+        self.driver.save_screenshot(path)
+        print(f"📷 Screenshot saved: {path}")
+
+    # ✅ Wrapper method for full login flow
     def login(self):
-        """Complete login flow in one call"""
+        """Complete login flow with error handling and screenshots"""
         self.enter_phone_number()
         self.enter_password()
         self.click_continue()
+
+        if self.is_login_error_displayed():
+            self.take_screenshot()
+            raise AssertionError("❌ Login failed: Unexpected error occurred")
+
         self.handle_profile_completion_popup()
-        assert self.is_home_screen_displayed(), "❌ Login failed: Home not displayed"
+
+        if not self.is_home_screen_displayed():
+            self.take_screenshot("home_not_displayed")
+            raise AssertionError("❌ Login failed: Home screen not visible")
+
         print("🎉 Login successful, home screen visible")
